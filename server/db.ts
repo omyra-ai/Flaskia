@@ -6,21 +6,13 @@
  * OMYRA ECOSYSTEM URL: www.omyra.org
  */
 
-import "dotenv/config";
 import pg from "pg";
 import bcrypt from "bcryptjs";
 const { Pool } = pg;
 
-const DEFAULT_NEON_DATABASE_URL =
-  "postgresql://neondb_owner:npg_16KNzsLOaYAt@ep-fancy-frog-b4988hvt-pooler.c-6.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
-
-const envDbUrl = process.env.DATABASE_URL;
 const connectionString =
-  envDbUrl && !envDbUrl.includes("ep-flat-dawn-aol0282a-pooler")
-    ? envDbUrl
-    : DEFAULT_NEON_DATABASE_URL;
-
-process.env.DATABASE_URL = connectionString;
+  process.env.DATABASE_URL ||
+  "postgresql://neondb_owner:npg_wLYJ4Ezn6Oru@ep-flat-dawn-aol0282a-pooler.c-2.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require";
 
 export const pool = new Pool({
   connectionString,
@@ -1324,8 +1316,6 @@ export async function initDb(frontProducts?: any[]) {
         appBrandBadge: "PRO",
         appSubtitle: "Laborbedarf Direkt",
         appLogoIcon: "FlaskConical",
-        appLogoUrl: "",
-        footerLogoUrl: "",
         appFaviconUrl: "https://img.icons8.com/color/48/chemistry.png",
         footerCompanyName: "Flaskia Supplies International Co.",
         footerLicence1: "OSHA ID: 44321-REAG",

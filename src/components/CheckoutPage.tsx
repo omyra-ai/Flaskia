@@ -159,10 +159,9 @@ export default function CheckoutPage({
 
   React.useEffect(() => {
     fetch("/api/payment-methods")
-      .then(res => res.ok ? res.json() : [])
+      .then(res => res.json())
       .then(data => {
-        const list = Array.isArray(data) ? data : [];
-        const activeMethods = list.filter((m: any) => m.is_active);
+        const activeMethods = data.filter((m: any) => m.is_active);
         setPaymentMethods(activeMethods);
       })
       .catch(console.error);

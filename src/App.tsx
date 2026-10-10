@@ -22,7 +22,6 @@ import MyInquiriesHub from "./components/MyInquiriesHub";
 import CheckoutPromptModal from "./components/CheckoutPromptModal";
 import IndiamartInquiryModal from "./components/IndiamartInquiryModal";
 import { useTheme } from "./context/ThemeContext";
-import { getProxiedImageUrl } from "./utils/imageUtils";
 import { 
   FlaskConical, 
   FlaskConicalOff, 
@@ -102,13 +101,13 @@ export default function App() {
   useEffect(() => {
     fetch("/api/categories")
       .then(res => res.ok ? res.json() : [])
-      .then(data => setAppCategories(Array.isArray(data) ? data : []))
+      .then(data => setAppCategories(data))
       .catch(console.error);
     
     fetch("/api/products")
       .then(res => res.ok ? res.json() : [])
       .then(data => {
-        if (Array.isArray(data) && data.length > 0) {
+        if (data && data.length > 0) {
           setAppProducts(data);
         } else {
           setAppProducts(PRODUCTS); // Fallback to local data
@@ -202,8 +201,6 @@ export default function App() {
     appBrandBadge: "PRO",
     appSubtitle: "Chemikalien & Forschungslösungen",
     appLogoIcon: "FlaskConical",
-    appLogoUrl: "",
-    footerLogoUrl: "",
     appFaviconUrl: "https://img.icons8.com/color/48/chemistry.png",
     admin_url_path: "/lunexa_official",
     adminWhatsappNumber: "15099941048",
@@ -288,22 +285,13 @@ export default function App() {
   // Sync favicon and document title dynamically
   useEffect(() => {
     if (homepageConfig.appFaviconUrl) {
-      const faviconSrc = getProxiedImageUrl(homepageConfig.appFaviconUrl);
       let link: HTMLLinkElement | null = document.querySelector("link[rel~='icon']");
       if (!link) {
         link = document.createElement('link');
         link.rel = 'icon';
         document.head.appendChild(link);
       }
-      link.href = faviconSrc;
-
-      let appleLink: HTMLLinkElement | null = document.querySelector("link[rel='apple-touch-icon']");
-      if (!appleLink) {
-        appleLink = document.createElement('link');
-        appleLink.rel = 'apple-touch-icon';
-        document.head.appendChild(appleLink);
-      }
-      appleLink.href = faviconSrc;
+      link.href = homepageConfig.appFaviconUrl;
     }
     if (homepageConfig.appName) {
       document.title = `${homepageConfig.appName} | ${homepageConfig.appSubtitle || "Marktplatz für Laborreagenzien"}`;
@@ -782,7 +770,6 @@ export default function App() {
           appBrandBadge={homepageConfig.appBrandBadge}
           appSubtitle={homepageConfig.appSubtitle}
           appLogoIcon={homepageConfig.appLogoIcon}
-          appLogoUrl={homepageConfig.appLogoUrl}
           currentUser={currentUser}
           onLogout={handleLogout}
           onOpenInquiry={handleHeaderOpenInquiry}
@@ -1286,33 +1273,25 @@ export default function App() {
                 onClick={() => handleNavigate("store")}
                 className="inline-flex items-center gap-2.5 cursor-pointer group"
               >
-                {(homepageConfig.footerLogoUrl || homepageConfig.appLogoUrl) ? (
-                  <img
-                    src={getProxiedImageUrl(homepageConfig.footerLogoUrl || homepageConfig.appLogoUrl)}
-                    alt={homepageConfig.appName}
-                    className="h-9 w-auto max-w-[160px] object-contain rounded-lg shrink-0"
-                  />
-                ) : (
-                  <div className="w-9 h-9 rounded-lg bg-[#0052cc] text-white flex items-center justify-center shadow-2xs group-hover:bg-[#0747a6] transition-colors shrink-0">
-                    {(() => {
-                      const FooterIcon = (() => {
-                        switch (homepageConfig.appLogoIcon) {
-                          case "Award": return Award;
-                          case "Activity": return Activity;
-                          case "ShieldCheck": return ShieldCheck;
-                          case "Globe": return Globe;
-                          case "Cpu": return Cpu;
-                          case "Sparkles": return Sparkles;
-                          case "Beaker": return Beaker;
-                          case "Heart": return Heart;
-                          case "FlaskConical":
-                          default: return FlaskConical;
-                        }
-                      })();
-                      return <FooterIcon className="w-4.5 h-4.5" />;
-                    })()}
-                  </div>
-                )}
+                <div className="w-9 h-9 rounded-lg bg-[#0052cc] text-white flex items-center justify-center shadow-2xs group-hover:bg-[#0747a6] transition-colors shrink-0">
+                  {(() => {
+                    const FooterIcon = (() => {
+                      switch (homepageConfig.appLogoIcon) {
+                        case "Award": return Award;
+                        case "Activity": return Activity;
+                        case "ShieldCheck": return ShieldCheck;
+                        case "Globe": return Globe;
+                        case "Cpu": return Cpu;
+                        case "Sparkles": return Sparkles;
+                        case "Beaker": return Beaker;
+                        case "Heart": return Heart;
+                        case "FlaskConical":
+                        default: return FlaskConical;
+                      }
+                    })();
+                    return <FooterIcon className="w-4.5 h-4.5" />;
+                  })()}
+                </div>
                 <div>
                   <span className="font-bold text-slate-900 text-base tracking-tight font-heading block leading-none">
                     {homepageConfig.appName}

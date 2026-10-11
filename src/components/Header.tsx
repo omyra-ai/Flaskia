@@ -71,7 +71,8 @@ export default function Header({
   onLogout,
   onOpenInquiry,
 }: HeaderProps) {
-  const { isIndiamart } = useTheme();
+  const { isIndiamart, isRetail } = useTheme();
+  const isNoCartAuthTheme = isRetail || isIndiamart;
   const TargetIcon = getLogoIcon(appLogoIcon);
 
   return (
@@ -130,7 +131,7 @@ export default function Header({
               Catalog
             </button>
 
-            {isIndiamart ? (
+            {isNoCartAuthTheme ? (
               <button
                 onClick={() => onNavigate("inquiries")}
                 className={`cursor-pointer transition-colors py-1 ${
@@ -167,7 +168,7 @@ export default function Header({
           <div className="flex items-center gap-2.5">
             <CurrencySelector align="right" />
 
-            {!isIndiamart && (
+            {!isNoCartAuthTheme && (
               currentUser ? (
                 <div className="hidden md:flex items-center gap-2">
                   <button
@@ -199,7 +200,7 @@ export default function Header({
               )
             )}
 
-            {isIndiamart ? (
+            {isNoCartAuthTheme ? (
               <button
                 onClick={() => {
                   if (onOpenInquiry) onOpenInquiry();

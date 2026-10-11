@@ -67,7 +67,8 @@ export default function MyInquiriesHub({
   onSelectProductById,
   onUpdateUser,
 }: MyInquiriesHubProps) {
-  const { isIndiamart } = useTheme();
+  const { isIndiamart, isRetail } = useTheme();
+  const isNoCartAuthTheme = isRetail || isIndiamart;
   const [inquiries, setInquiries] = useState<InquiryItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
@@ -79,7 +80,7 @@ export default function MyInquiriesHub({
   const [manualEmail, setManualEmail] = useState<string>("");
   const [emailInput, setEmailInput] = useState<string>("");
 
-  const activeEmail = (!isIndiamart && currentUser?.email) ? currentUser.email : manualEmail;
+  const activeEmail = (!isNoCartAuthTheme && currentUser?.email) ? currentUser.email : manualEmail;
 
   const fetchMyInquiries = async (showRefreshSpinner = false) => {
     if (!activeEmail) {
@@ -237,7 +238,7 @@ export default function MyInquiriesHub({
             </button>
           </form>
 
-          {!isIndiamart && (
+          {!isNoCartAuthTheme && (
             <div className="pt-4 border-t border-slate-100">
               <p className="text-[11px] text-slate-400 mb-4">Or sign in to your account:</p>
               <CustomerAuth

@@ -53,6 +53,7 @@ import {
 
 export default function App() {
   const { isRetail, isIndiamart } = useTheme();
+  const isNoCartAuthTheme = isRetail || isIndiamart;
   const [currentView, setCurrentView] = useState<"store" | "product" | "checkout" | "orders" | "inquiries" | "admin" | "policies" | "profile">("store");
   const [activePolicyTab, setActivePolicyTab] = useState<PolicyTab>("about");
   const [activeProduct, setActiveProduct] = useState<Product | null>(null);
@@ -416,7 +417,7 @@ export default function App() {
           setCurrentView("policies");
           setActiveProduct(null);
         } else if (["store", "checkout", "orders", "inquiries", "profile"].includes(state.view)) {
-          if (isIndiamart && ["checkout", "orders", "profile"].includes(state.view)) {
+          if (isNoCartAuthTheme && ["checkout", "orders", "profile"].includes(state.view)) {
             setCurrentView("store");
             setActiveProduct(null);
           } else {
@@ -497,7 +498,7 @@ export default function App() {
 
   const handleQuickAddToCart = (product: Product, event: React.MouseEvent) => {
     event.stopPropagation();
-    if (isIndiamart) {
+    if (isNoCartAuthTheme) {
       handleOpenInquiry(product, 1);
       return;
     }
@@ -530,7 +531,7 @@ export default function App() {
   };
 
   const handleDetailedAddToCart = (product: Product, qty: number, pkg: string, agreesTerms: boolean) => {
-    if (isIndiamart) {
+    if (isNoCartAuthTheme) {
       handleOpenInquiry(product, qty);
       return;
     }
@@ -700,7 +701,7 @@ export default function App() {
   };
 
   const handleNavigate = (view: any) => {
-    if (isIndiamart && ["checkout", "orders", "profile"].includes(view)) {
+    if (isNoCartAuthTheme && ["checkout", "orders", "profile"].includes(view)) {
       setCurrentView("store");
       setActiveProduct(null);
       window.history.pushState({ view: "store" }, "", "/");
@@ -780,7 +781,7 @@ export default function App() {
       {/* Slide-out FAQ & Hygiene Manual Overlay */}
       <div className="print:hidden">
         <HelpFaq isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
-        {!isIndiamart && showCheckoutModalPrompt && addedProductForCheckoutModal && (
+        {!isNoCartAuthTheme && showCheckoutModalPrompt && addedProductForCheckoutModal && (
           <CheckoutPromptModal
             product={addedProductForCheckoutModal}
             qty={modalQty}
@@ -1118,7 +1119,7 @@ export default function App() {
         )}
 
         {/* VIEW 3: DISPATCH CART & CHECKOUT PAGE WRAPPER */}
-        {!isIndiamart && currentView === "checkout" && (
+        {!isNoCartAuthTheme && currentView === "checkout" && (
           authLoading ? (
             <div className="py-24 text-center text-xs text-slate-400 font-mono space-y-2">
               <div className="w-8 h-8 rounded-full border-2 border-slate-200 border-t-blue-600 animate-spin mx-auto" />
@@ -1149,7 +1150,7 @@ export default function App() {
         )}
 
         {/* VIEW 4: LICENSED TRANSIT TRACKER HISTORY */}
-        {!isIndiamart && currentView === "orders" && (
+        {!isNoCartAuthTheme && currentView === "orders" && (
           authLoading ? (
             <div className="py-24 text-center text-xs text-slate-400 font-mono space-y-2">
               <div className="w-8 h-8 rounded-full border-2 border-slate-200 border-t-blue-600 animate-spin mx-auto" />
@@ -1200,7 +1201,7 @@ export default function App() {
         )}
 
         {/* VIEW 6: SECURE PROFILE HUB */}
-        {!isIndiamart && currentView === "profile" && (
+        {!isNoCartAuthTheme && currentView === "profile" && (
           authLoading ? (
             <div className="py-24 text-center text-xs text-slate-400 font-mono space-y-2">
               <div className="w-8 h-8 rounded-full border-2 border-slate-200 border-t-blue-600 animate-spin mx-auto" />

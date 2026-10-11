@@ -8,16 +8,16 @@ export interface CurrencyInfo {
 }
 
 export const SUPPORTED_CURRENCIES: CurrencyInfo[] = [
-  { code: "INR", symbol: "₹", name: "Indian Rupee", flag: "🇮🇳" },
-  { code: "USD", symbol: "$", name: "US Dollar", flag: "🇺🇸" },
-  { code: "EUR", symbol: "€", name: "Euro", flag: "🇪🇺" },
-  { code: "GBP", symbol: "£", name: "British Pound", flag: "🇬🇧" },
-  { code: "AED", symbol: "AED ", name: "UAE Dirham", flag: "🇦🇪" },
-  { code: "CAD", symbol: "CA$", name: "Canadian Dollar", flag: "🇨🇦" },
-  { code: "AUD", symbol: "A$", name: "Australian Dollar", flag: "🇦🇺" },
-  { code: "SGD", symbol: "S$", name: "Singapore Dollar", flag: "🇸🇬" },
-  { code: "JPY", symbol: "¥", name: "Japanese Yen", flag: "🇯🇵" },
-  { code: "SAR", symbol: "SAR ", name: "Saudi Riyal", flag: "🇸🇦" },
+  { code: "EUR", symbol: "€", name: "Euro", flag: "🇩🇪" },
+  { code: "USD", symbol: "$", name: "US-Dollar", flag: "🇺🇸" },
+  { code: "INR", symbol: "₹", name: "Indische Rupie", flag: "🇮🇳" },
+  { code: "GBP", symbol: "£", name: "Britisches Pfund", flag: "🇬🇧" },
+  { code: "AED", symbol: "AED ", name: "VAE-Dirham", flag: "🇦🇪" },
+  { code: "CAD", symbol: "CA$", name: "Kanadischer Dollar", flag: "🇨🇦" },
+  { code: "AUD", symbol: "A$", name: "Australischer Dollar", flag: "🇦🇺" },
+  { code: "SGD", symbol: "S$", name: "Singapur-Dollar", flag: "🇸🇬" },
+  { code: "JPY", symbol: "¥", name: "Japanischer Yen", flag: "🇯🇵" },
+  { code: "SAR", symbol: "SAR ", name: "Saudi-Riyal", flag: "🇸🇦" },
 ];
 
 const FALLBACK_RATES: Record<string, number> = {
@@ -81,8 +81,8 @@ function detectDefaultCurrencyByLocale(): { currency: string; countryName: strin
   } catch (e) {
     console.warn("Timezone detection exception:", e);
   }
-  // Native Marketplace Base default: INR (India)
-  return { currency: "INR", countryName: "India 🇮🇳", countryCode: "IN" };
+  // Native Marketplace Base default: EUR (Deutschland)
+  return { currency: "EUR", countryName: "Deutschland 🇩🇪", countryCode: "DE" };
 }
 
 export const CurrencyProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {

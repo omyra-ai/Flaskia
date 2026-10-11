@@ -415,14 +415,6 @@ _Sent via ${appName} Marketplace Inquiry Portal_`;
             {/* Bottom Actions */}
             <div className="pt-3 border-t border-slate-200 flex items-center justify-end gap-2.5">
               <button
-                type="submit"
-                disabled={loading}
-                className="bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs px-4 py-2.5 rounded-xl transition cursor-pointer border border-slate-200"
-              >
-                Submit Web RFQ
-              </button>
-
-              <button
                 type="button"
                 disabled={loading}
                 onClick={() => handleWhatsappSubmit()}

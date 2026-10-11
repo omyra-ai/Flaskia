@@ -374,13 +374,13 @@ _Sent via ${appName} Marketplace Inquiry Portal_`;
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-xs font-medium text-slate-700">
-                  Your Name / Organization
+                  Full Name
                 </label>
                 <input
                   type="text"
                   value={buyerName}
                   onChange={(e) => setBuyerName(e.target.value)}
-                  placeholder="Name or Institution"
+                  placeholder="Enter your full name"
                   className="w-full text-xs p-2.5 rounded-lg border border-slate-200 focus:border-[#0052cc] outline-none bg-white text-slate-900"
                 />
               </div>

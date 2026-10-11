@@ -200,16 +200,7 @@ export default function Header({
               )
             )}
 
-            {isNoCartAuthTheme ? (
-              <button
-                onClick={() => {
-                  if (onOpenInquiry) onOpenInquiry();
-                }}
-                className="px-4 py-2 bg-[#0052cc] hover:bg-[#0747a6] text-white font-semibold text-xs rounded-lg transition-colors cursor-pointer whitespace-nowrap"
-              >
-                Request Quote
-              </button>
-            ) : (
+            {!isNoCartAuthTheme && (
               <button
                 onClick={() => onNavigate("checkout")}
                 className="flex items-center gap-2 px-4 py-2 bg-[#0052cc] hover:bg-[#0747a6] text-white font-semibold text-xs rounded-lg transition-colors cursor-pointer whitespace-nowrap"

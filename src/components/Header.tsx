@@ -100,7 +100,7 @@ export default function Header({
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
-              placeholder="Suche nach Chemikalienname, CAS-Nummer oder Formel..."
+              placeholder="Search by chemical name, CAS number, or formula..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               className="w-full pl-9 pr-8 py-2 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg outline-none placeholder-slate-400 focus:bg-white focus:border-[#0052cc] focus:ring-2 focus:ring-[#0052cc]/10 transition-all"
@@ -109,7 +109,7 @@ export default function Header({
               <button
                 onClick={() => onSearchChange("")}
                 className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 cursor-pointer"
-                aria-label="Suche löschen"
+                aria-label="Clear search"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -128,7 +128,7 @@ export default function Header({
                   : "hover:text-slate-900"
               }`}
             >
-              Katalog
+              Catalog
             </button>
 
             {isNoCartAuthTheme ? (
@@ -140,7 +140,7 @@ export default function Header({
                     : "hover:text-slate-900"
                 }`}
               >
-                Anfragen
+                Inquiries
               </button>
             ) : (
               <button
@@ -151,7 +151,7 @@ export default function Header({
                     : "hover:text-slate-900"
                 }`}
               >
-                Bestellungen
+                Orders
               </button>
             )}
 
@@ -159,7 +159,7 @@ export default function Header({
               onClick={onOpenHelp}
               className="cursor-pointer hover:text-slate-900 transition-colors py-1"
             >
-              Sicherheit & FAQ
+              Safety & FAQ
             </button>
           </nav>
 
@@ -179,14 +179,14 @@ export default function Header({
                         : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                     }`}
                   >
-                    {currentUser.displayName || currentUser.email?.split("@")[0] || "Konto"}
+                    {currentUser.displayName || currentUser.email?.split("@")[0] || "Account"}
                   </button>
                   {onLogout && (
                     <button
                       onClick={onLogout}
                       className="text-xs font-medium text-slate-500 hover:text-rose-600 px-2 py-1.5 cursor-pointer transition-colors"
                     >
-                      Abmelden
+                      Sign Out
                     </button>
                   )}
                 </div>
@@ -195,7 +195,7 @@ export default function Header({
                   onClick={() => onNavigate("orders")}
                   className="hidden md:inline-flex px-3 py-2 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-100 cursor-pointer transition-colors"
                 >
-                  Anmelden
+                  Sign In
                 </button>
               )
             )}
@@ -206,7 +206,7 @@ export default function Header({
                 className="flex items-center gap-2 px-4 py-2 bg-[#0052cc] hover:bg-[#0747a6] text-white font-semibold text-xs rounded-lg transition-colors cursor-pointer whitespace-nowrap"
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
-                <span>Warenkorb</span>
+                <span>Cart</span>
                 {cartCount > 0 && (
                   <span className="font-mono text-[11px] font-bold bg-white/20 px-1.5 py-0.2 rounded">
                     {cartCount}
@@ -224,7 +224,7 @@ export default function Header({
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             type="text"
-            placeholder="Suche nach Reagenzien, CAS-Nr. oder Formel..."
+            placeholder="Search reagents, CAS #, or formula..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             className="w-full pl-9 pr-8 py-2 text-xs text-slate-900 bg-slate-50 border border-slate-200 rounded-lg outline-none placeholder-slate-400 focus:bg-white focus:border-[#0052cc]"

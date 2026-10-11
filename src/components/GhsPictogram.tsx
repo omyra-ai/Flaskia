@@ -22,38 +22,38 @@ export default function GhsPictogram({ type, size = "md" }: GhsPictogramProps) {
   // Configuration for hazard categories
   const config = {
     corrosive: {
-      title: "Ätzend",
-      description: "Verursacht schwere Verätzungen der Haut, Augen oder Materialien.",
+      title: "Corrosive",
+      description: "Severe corrosive skin, eye, or material damage.",
       icon: <Waves className={`text-zinc-950 ${isSm ? 'w-5 h-5' : 'w-7 h-7'}`} />,
       color: "border-red-600 bg-white"
     },
     toxic: {
-      title: "Akut giftig",
-      description: "Schwere akute Expositionsgefahr, Vergiftungsrisiko.",
+      title: "Acute Toxic",
+      description: "Severe acute exposure hazard, poison risk.",
       icon: <Skull className={`text-zinc-950 ${isSm ? 'w-5 h-5' : 'w-7 h-7'}`} />,
       color: "border-red-600 bg-white"
     },
     irritant: {
-      title: "Gesundheitsschädlich / Reizend",
-      description: "Reizung der Atemwege oder akute Hautreizung.",
+      title: "Harmful / Irritant",
+      description: "Respiratory tract irritant or acute skin irritation.",
       icon: <ShieldAlert className={`text-zinc-950 ${isSm ? 'w-5 h-5' : 'w-7 h-7'}`} />,
       color: "border-red-600 bg-white"
     },
     environment: {
-      title: "Umweltgefährlich",
-      description: "Sehr giftig für Wasserorganismen mit langfristiger Wirkung.",
+      title: "Aquatic Hazard",
+      description: "Very toxic to aquatic life with long-lasting damages.",
       icon: <Trash2 className={`text-zinc-950 ${isSm ? 'w-5 h-5' : 'w-7 h-7'}`} />,
       color: "border-red-600 bg-white"
     },
     flammable: {
-      title: "Entzündbar",
-      description: "Von Funken, offenen Flammen und Wärmequellen fernhalten.",
+      title: "Flammable",
+      description: "Keep away from sparks, open flames, and heat sources.",
       icon: <Flame className={`text-zinc-950 ${isSm ? 'w-5 h-5' : 'w-7 h-7'}`} />,
       color: "border-red-600 bg-white"
     },
     safe: {
-      title: "Allgemein ungefährlich",
-      description: "Standardhandhabung, keine schweren chemischen Warnhinweise.",
+      title: "General Non-Hazardous",
+      description: "Standard handling, no severe chemical warnings apply.",
       icon: <CheckCircle className={`text-emerald-600 ${isSm ? 'w-5 h-5' : 'w-7 h-7'}`} />,
       color: "border-emerald-600 bg-zinc-50"
     }

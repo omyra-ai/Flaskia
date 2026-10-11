@@ -398,7 +398,7 @@ _Sent via ${appName} Marketplace Inquiry Portal_`;
                 />
               </div>
 
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label className="text-xs font-medium text-slate-700">
                   Email Address
                 </label>
@@ -406,37 +406,10 @@ _Sent via ${appName} Marketplace Inquiry Portal_`;
                   type="email"
                   value={buyerEmail}
                   onChange={(e) => setBuyerEmail(e.target.value)}
-                  placeholder="procurement@company.com"
+                  placeholder="Enter your email"
                   className="w-full text-xs p-2.5 rounded-lg border border-slate-200 focus:border-[#0052cc] outline-none bg-white text-slate-900"
                 />
               </div>
-
-              <div className="space-y-1">
-                <label className="text-xs font-medium text-slate-700">
-                  Delivery Location / Postal Code
-                </label>
-                <input
-                  type="text"
-                  value={deliveryPincode}
-                  onChange={(e) => setDeliveryPincode(e.target.value)}
-                  placeholder="City or Postal Code"
-                  className="w-full text-xs p-2.5 rounded-lg border border-slate-200 focus:border-[#0052cc] outline-none bg-white text-slate-900"
-                />
-              </div>
-            </div>
-
-            {/* Requirement Notes */}
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-slate-700">
-                Additional Notes (Optional)
-              </label>
-              <textarea
-                rows={2}
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder="Specify grade, packaging, or delivery requirements..."
-                className="w-full text-xs p-2.5 rounded-lg border border-slate-200 focus:border-[#0052cc] outline-none bg-white text-slate-900"
-              />
             </div>
 
             {/* Bottom Actions */}

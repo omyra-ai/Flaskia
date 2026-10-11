@@ -23,6 +23,7 @@ import {
   Lock,
 } from "lucide-react";
 import CustomerAuth from "./CustomerAuth";
+import { useTheme } from "../context/ThemeContext";
 
 export interface InquiryMessage {
   id: string;
@@ -66,6 +67,7 @@ export default function MyInquiriesHub({
   onSelectProductById,
   onUpdateUser,
 }: MyInquiriesHubProps) {
+  const { isIndiamart } = useTheme();
   const [inquiries, setInquiries] = useState<InquiryItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
@@ -75,8 +77,9 @@ export default function MyInquiriesHub({
   const [statusFilter, setStatusFilter] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [manualEmail, setManualEmail] = useState<string>("");
+  const [emailInput, setEmailInput] = useState<string>("");
 
-  const activeEmail = currentUser?.email || manualEmail;
+  const activeEmail = (!isIndiamart && currentUser?.email) ? currentUser.email : manualEmail;
 
   const fetchMyInquiries = async (showRefreshSpinner = false) => {
     if (!activeEmail) {
@@ -196,44 +199,55 @@ export default function MyInquiriesHub({
         )}
       </div>
 
-      {/* Auth Guard if no email set */}
+      {/* Inquiry Lookup by Email (No Auth Required in Current B2B Theme) */}
       {!activeEmail ? (
         <div className="bg-white border border-slate-200 rounded-2xl p-8 max-w-xl mx-auto text-center space-y-6 shadow-2xs">
-          <div className="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center mx-auto text-slate-700">
-            <Lock className="w-6 h-6" />
+          <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto text-[#0052cc]">
+            <Mail className="w-6 h-6" />
           </div>
           <div>
-            <h3 className="text-lg font-bold text-slate-900 font-heading">Access Your Inquiries</h3>
+            <h3 className="text-lg font-bold text-slate-900 font-heading">Track Your B2B Inquiries</h3>
             <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto leading-relaxed">
-              Enter your registered email address to view your B2B quote inquiries and supplier responses.
+              Enter the email address used on your quotation inquiry to view your RFQ status and supplier responses.
             </p>
           </div>
 
-          <div className="flex gap-2 max-w-md mx-auto">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (emailInput.trim()) {
+                setManualEmail(emailInput.trim());
+              }
+            }}
+            className="flex gap-2 max-w-md mx-auto"
+          >
             <input
               type="email"
-              placeholder="Enter registered email (e.g., buyer@company.com)"
-              value={manualEmail}
-              onChange={(e) => setManualEmail(e.target.value)}
-              className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-emerald-600 text-slate-900"
+              required
+              placeholder="Enter inquiry email (e.g., procurement@company.com)"
+              value={emailInput}
+              onChange={(e) => setEmailInput(e.target.value)}
+              className="flex-1 bg-white border border-slate-200 rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-[#0052cc] text-slate-900"
             />
             <button
-              onClick={() => fetchMyInquiries()}
-              className="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold px-5 py-2.5 rounded-xl text-xs transition cursor-pointer"
+              type="submit"
+              className="bg-[#0052cc] hover:bg-[#0747a6] text-white font-semibold px-5 py-2.5 rounded-xl text-xs transition cursor-pointer"
             >
               View Inquiries
             </button>
-          </div>
+          </form>
 
-          <div className="pt-4 border-t border-slate-100">
-            <p className="text-[11px] text-slate-400 mb-4">Or sign in to your account:</p>
-            <CustomerAuth
-              onAuthSuccess={(user) => {
-                if (onUpdateUser) onUpdateUser(user);
-                setManualEmail(user.email);
-              }}
-            />
-          </div>
+          {!isIndiamart && (
+            <div className="pt-4 border-t border-slate-100">
+              <p className="text-[11px] text-slate-400 mb-4">Or sign in to your account:</p>
+              <CustomerAuth
+                onAuthSuccess={(user) => {
+                  if (onUpdateUser) onUpdateUser(user);
+                  setManualEmail(user.email);
+                }}
+              />
+            </div>
+          )}
         </div>
       ) : isLoading ? (
         <div className="bg-white border border-slate-200 rounded-2xl p-16 text-center space-y-3 shadow-2xs">

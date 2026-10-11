@@ -416,8 +416,13 @@ export default function App() {
           setCurrentView("policies");
           setActiveProduct(null);
         } else if (["store", "checkout", "orders", "inquiries", "profile"].includes(state.view)) {
-          setCurrentView(state.view);
-          if (state.view === "store") setActiveProduct(null);
+          if (isIndiamart && ["checkout", "orders", "profile"].includes(state.view)) {
+            setCurrentView("store");
+            setActiveProduct(null);
+          } else {
+            setCurrentView(state.view);
+            if (state.view === "store") setActiveProduct(null);
+          }
         } else {
           setCurrentView("store");
           setActiveProduct(null);
@@ -492,6 +497,10 @@ export default function App() {
 
   const handleQuickAddToCart = (product: Product, event: React.MouseEvent) => {
     event.stopPropagation();
+    if (isIndiamart) {
+      handleOpenInquiry(product, 1);
+      return;
+    }
     
     // Check if chemical requires a specific compliance license which can be checked inside Product Details first
     // For quick add, automatically use default packaging
@@ -521,6 +530,10 @@ export default function App() {
   };
 
   const handleDetailedAddToCart = (product: Product, qty: number, pkg: string, agreesTerms: boolean) => {
+    if (isIndiamart) {
+      handleOpenInquiry(product, qty);
+      return;
+    }
     if (!agreesTerms) return;
 
     const existingIndex = cart.findIndex(item => item.product.id === product.id);
@@ -687,6 +700,13 @@ export default function App() {
   };
 
   const handleNavigate = (view: any) => {
+    if (isIndiamart && ["checkout", "orders", "profile"].includes(view)) {
+      setCurrentView("store");
+      setActiveProduct(null);
+      window.history.pushState({ view: "store" }, "", "/");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
     setCurrentView(view);
     if (view === "store") {
       setActiveProduct(null);
@@ -760,7 +780,7 @@ export default function App() {
       {/* Slide-out FAQ & Hygiene Manual Overlay */}
       <div className="print:hidden">
         <HelpFaq isOpen={isHelpOpen} onClose={() => setIsHelpOpen(false)} />
-        {showCheckoutModalPrompt && addedProductForCheckoutModal && (
+        {!isIndiamart && showCheckoutModalPrompt && addedProductForCheckoutModal && (
           <CheckoutPromptModal
             product={addedProductForCheckoutModal}
             qty={modalQty}
@@ -1098,7 +1118,7 @@ export default function App() {
         )}
 
         {/* VIEW 3: DISPATCH CART & CHECKOUT PAGE WRAPPER */}
-        {currentView === "checkout" && (
+        {!isIndiamart && currentView === "checkout" && (
           authLoading ? (
             <div className="py-24 text-center text-xs text-slate-400 font-mono space-y-2">
               <div className="w-8 h-8 rounded-full border-2 border-slate-200 border-t-blue-600 animate-spin mx-auto" />
@@ -1129,7 +1149,7 @@ export default function App() {
         )}
 
         {/* VIEW 4: LICENSED TRANSIT TRACKER HISTORY */}
-        {currentView === "orders" && (
+        {!isIndiamart && currentView === "orders" && (
           authLoading ? (
             <div className="py-24 text-center text-xs text-slate-400 font-mono space-y-2">
               <div className="w-8 h-8 rounded-full border-2 border-slate-200 border-t-blue-600 animate-spin mx-auto" />
@@ -1180,7 +1200,7 @@ export default function App() {
         )}
 
         {/* VIEW 6: SECURE PROFILE HUB */}
-        {currentView === "profile" && (
+        {!isIndiamart && currentView === "profile" && (
           authLoading ? (
             <div className="py-24 text-center text-xs text-slate-400 font-mono space-y-2">
               <div className="w-8 h-8 rounded-full border-2 border-slate-200 border-t-blue-600 animate-spin mx-auto" />
